@@ -1,5 +1,6 @@
 name: TreeMe
 version: 0.1.0
-author: jonahisadev
+author: "Jonah Alligood"
 main: me.jonahisadev.treeme.Main
 api-version: 1.16
+website: "https://jonahisadev.me/treeme"
