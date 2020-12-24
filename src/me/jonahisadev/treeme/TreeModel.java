@@ -36,7 +36,8 @@ public class TreeModel {
                         Block check = block.getLocation().add(x, y, z).getBlock();
 
                         // Recursively find surrounding blocks
-                        if ((Types.isLog(check) || Types.isLeaf(check)) && !logs.contains(check))
+                        if ((Types.isLog(check) || Types.isLeaf(check)) &&
+                                !logs.contains(check) && !leaves.contains(check))
                             find(check);
                     }
                 }
@@ -45,7 +46,28 @@ public class TreeModel {
 
         // Algorithm for leaves
         else if (Types.isLeaf(block)) {
-            // TODO: handle leaves
+            leaves.add(block);
+
+            int y = 0;
+            while (true) {
+                HashSet<Block> local_set = new HashSet<>();
+
+                for (int x = -1; x <= 1; x++) {
+                    for (int z = -1; z <= 1; z++) {
+                        Block check = block.getLocation().add(x, y, z).getBlock();
+
+                        if ((Types.isLeaf(check)) && !leaves.contains(check)) {
+                            local_set.add(check);
+                            find(check);
+                        }
+                    }
+                }
+
+                if (local_set.size() == 0)
+                    break;
+
+                ++y;
+            }
         }
     }
 

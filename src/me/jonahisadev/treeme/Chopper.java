@@ -1,6 +1,7 @@
 package me.jonahisadev.treeme;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -17,6 +18,11 @@ public class Chopper {
         // Break the logs naturally for drops
         for (Block log : tree.logs) {
             log.breakNaturally();
+        }
+
+        // Get rid of the leaves
+        for (Block leaf : tree.leaves) {
+            leaf.setType(Material.AIR);
         }
 
         // Only do tool damage for the number of logs we broke
