@@ -3,6 +3,7 @@ package me.jonahisadev.treeme;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Leaves;
 
 import java.util.HashSet;
 
@@ -57,6 +58,13 @@ public class TreeModel {
                         Block check = block.getLocation().add(x, y, z).getBlock();
 
                         if ((Types.isLeaf(check)) && !leaves.contains(check)) {
+
+                            // Maybe a way to check if it's the same tree?
+                            int check_dist = ((Leaves)check.getBlockData()).getDistance();
+                            int this_dist = ((Leaves)block.getBlockData()).getDistance();
+                            if (check_dist < this_dist)
+                                continue;
+
                             local_set.add(check);
                             find(check);
                         }

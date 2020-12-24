@@ -25,6 +25,8 @@ public class Chopper {
             leaf.setType(Material.AIR);
         }
 
+        // TODO: Generate other things that trees drop
+
         // Only do tool damage for the number of logs we broke
         return tree.logs.size();
     }
