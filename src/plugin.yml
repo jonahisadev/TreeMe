@@ -1,0 +1,5 @@
+name: TreeMe
+version: 0.1.0
+author: jonahisadev
+main: me.jonahisadev.treeme.Main
+api-version: 1.16
