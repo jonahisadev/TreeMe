@@ -29,6 +29,10 @@ public class ChopListener implements Listener {
         Block block = event.getBlock();
         ItemStack tool = player.getInventory().getItemInMainHand();
 
+        // Check player store
+        if (!_plugin.playerStore.state(player.getUniqueId()))
+            return;
+
         // Constraints on when to run chopping algorithm
         if (Types.isLog(block) &&
                 tool.getType().toString().contains("AXE") &&
