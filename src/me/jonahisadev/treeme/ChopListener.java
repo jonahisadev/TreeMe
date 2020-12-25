@@ -13,11 +13,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class CutListener implements Listener {
+public class ChopListener implements Listener {
 
     private Main _plugin;
 
-    public CutListener(Main plugin)
+    public ChopListener(Main plugin)
     {
         _plugin = plugin;
     }
