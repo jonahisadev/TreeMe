@@ -18,7 +18,25 @@ public class Types {
 
     public static Material sameSapling(Material logMat)
     {
-        return Material.OAK_SAPLING;
+        switch (logMat) {
+            case OAK_LOG:
+            case STRIPPED_OAK_LOG:
+                return Material.OAK_SAPLING;
+            case DARK_OAK_LOG:
+            case STRIPPED_DARK_OAK_LOG:
+                return Material.DARK_OAK_SAPLING;
+            case SPRUCE_LOG:
+            case STRIPPED_SPRUCE_LOG:
+                return Material.SPRUCE_SAPLING;
+            case BIRCH_LOG:
+            case STRIPPED_BIRCH_LOG:
+                return Material.BIRCH_SAPLING;
+            case ACACIA_LOG:
+            case STRIPPED_ACACIA_LOG:
+                return Material.ACACIA_SAPLING;
+            default:
+                return Material.AIR;
+        }
     }
 
 }

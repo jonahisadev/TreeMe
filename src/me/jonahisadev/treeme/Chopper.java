@@ -19,7 +19,7 @@ public class Chopper {
             return 0;
 
         // Generate saplings
-        int saplings = (int)Math.ceil((double)tree.leaves.size() / 20);
+        int saplings = (int)Math.floor((double)tree.leaves.size() / 20.0);
         Material sapling_type = Types.sameSapling(tree.getBlock().getType());
         if (sapling_type != Material.AIR && tree.getTopLocation() != null) {
             for (int i = 0; i < saplings; i++) {
@@ -31,7 +31,7 @@ public class Chopper {
 
         // Drop apples from oaks
         if (tree.getBlock().getType().toString().contains("OAK_LOG")) {
-            int apples = new Random().nextInt(2) + 1;
+            int apples = new Random().nextInt(3);
             for (int i = 0; i < apples; i++) {
                 Item item = tree.getWorld().dropItemNaturally(tree.getTopLocation(),
                         new ItemStack(Material.APPLE));
@@ -40,7 +40,7 @@ public class Chopper {
         }
 
         // Drop some sticks
-        int sticks = new Random().nextInt(2) + 2;
+        int sticks = new Random().nextInt(3) + 2;
         for (int i = 0; i < sticks; i++) {
             Item item = tree.getWorld().dropItemNaturally(tree.getTopLocation(),
                     new ItemStack(Material.STICK));
