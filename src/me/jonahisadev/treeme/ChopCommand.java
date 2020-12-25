@@ -15,11 +15,21 @@ public class ChopCommand implements CommandExecutor {
         _plugin = plugin;
     }
 
+    private void sendHelp(Player player)
+    {
+        player.sendMessage(
+            ChatColor.GOLD + "TreeMe Commands:\n" +
+            "  /tree toggle - Toggle TreeMe features for yourself\n" +
+            "  /tree help - Show this message"
+        );
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
+            // Commands
             switch (args[0]) {
                 case "toggle": {
                     _plugin.playerStore.toggle(player.getUniqueId());
@@ -28,13 +38,19 @@ public class ChopCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.GRAY + "TreeMe is now " + msg + ChatColor.GRAY + " for you");
                     break;
                 }
+                case "help": {
+                    sendHelp(player);
+                    break;
+                }
                 default:
+                    sendHelp(player);
                     return false;
             }
 
             return true;
         }
 
+        sender.sendMessage("This should only be run by players for now");
         return false;
     }
 

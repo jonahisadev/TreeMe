@@ -9,4 +9,4 @@ commands:
   treeme:
     description: Control personal usage of TreeMe
     aliases: [tree]
-    usage: "/treeme help"
+    usage: "/tree [toggle|help]"

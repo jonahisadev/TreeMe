@@ -26,6 +26,7 @@ public class Main extends JavaPlugin {
         // Register
         getServer().getPluginManager().registerEvents(new ChopListener(this), this);
         getCommand("treeme").setExecutor(new ChopCommand(this));
+        getCommand("treeme").setTabCompleter(new ChopCommandCompleter());
     }
 
 }
