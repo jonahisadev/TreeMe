@@ -4,8 +4,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Chopper {
 
@@ -14,6 +17,35 @@ public class Chopper {
         // If there are no leaves, this is not actually a tree
         if (tree.leaves.size() == 0)
             return 0;
+
+        // Generate saplings
+        int saplings = (int)Math.ceil((double)tree.leaves.size() / 20);
+        Material sapling_type = Types.sameSapling(tree.getBlock().getType());
+        if (sapling_type != Material.AIR && tree.getTopLocation() != null) {
+            for (int i = 0; i < saplings; i++) {
+                Item item = tree.getWorld().dropItemNaturally(tree.getTopLocation(),
+                        new ItemStack(sapling_type));
+                item.setVelocity(item.getVelocity().zero());
+            }
+        }
+
+        // Drop apples from oaks
+        if (tree.getBlock().getType().toString().contains("OAK_LOG")) {
+            int apples = new Random().nextInt(2) + 1;
+            for (int i = 0; i < apples; i++) {
+                Item item = tree.getWorld().dropItemNaturally(tree.getTopLocation(),
+                        new ItemStack(Material.APPLE));
+                item.setVelocity(item.getVelocity().zero());
+            }
+        }
+
+        // Drop some sticks
+        int sticks = new Random().nextInt(2) + 2;
+        for (int i = 0; i < sticks; i++) {
+            Item item = tree.getWorld().dropItemNaturally(tree.getTopLocation(),
+                    new ItemStack(Material.STICK));
+            item.setVelocity(item.getVelocity().zero());
+        }
 
         // Break the logs naturally for drops
         for (Block log : tree.logs) {
@@ -24,8 +56,6 @@ public class Chopper {
         for (Block leaf : tree.leaves) {
             leaf.setType(Material.AIR);
         }
-
-        // TODO: Generate other things that trees drop
 
         // Only do tool damage for the number of logs we broke
         return tree.logs.size();

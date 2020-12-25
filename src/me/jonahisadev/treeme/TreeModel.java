@@ -13,10 +13,16 @@ public class TreeModel {
     public HashSet<Block> leaves;
 
     private Main _plugin;
+    private World _world;
+    private Block _block;
+    private Location _top;
 
     public TreeModel(Main plugin, World world, Block block)
     {
         _plugin = plugin;
+        _world = world;
+        _block = block;
+
         logs = new HashSet<>();
         leaves = new HashSet<>();
 
@@ -62,10 +68,11 @@ public class TreeModel {
                             // Maybe a way to check if it's the same tree?
                             int check_dist = ((Leaves)check.getBlockData()).getDistance();
                             int this_dist = ((Leaves)block.getBlockData()).getDistance();
-                            if (check_dist < this_dist)
+                            if (check_dist <= this_dist)
                                 continue;
 
                             local_set.add(check);
+                            _top = check.getLocation();
                             find(check);
                         }
                     }
@@ -79,5 +86,19 @@ public class TreeModel {
         }
     }
 
+    public World getWorld()
+    {
+        return _world;
+    }
+
+    public Block getBlock()
+    {
+        return _block;
+    }
+
+    public Location getTopLocation()
+    {
+        return _top;
+    }
 
 }
