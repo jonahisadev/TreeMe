@@ -55,33 +55,35 @@ public class TreeModel {
         else if (Types.isLeaf(block)) {
             leaves.add(block);
 
-            int y = 0;
             while (true) {
                 HashSet<Block> local_set = new HashSet<>();
 
                 for (int x = -1; x <= 1; x++) {
-                    for (int z = -1; z <= 1; z++) {
-                        Block check = block.getLocation().add(x, y, z).getBlock();
+                    for (int y = -1; y <= 1; y++) {
+                        for (int z = -1; z <= 1; z++) {
+                            Block check = block.getLocation().add(x, y, z).getBlock();
 
-                        if ((Types.isLeaf(check)) && !leaves.contains(check)) {
+                            if ((Types.isLog(check) || Types.isLeaf(check)) &&
+                                    !logs.contains(check) && !leaves.contains(check)) {
 
-                            // Maybe a way to check if it's the same tree?
-                            int check_dist = ((Leaves)check.getBlockData()).getDistance();
-                            int this_dist = ((Leaves)block.getBlockData()).getDistance();
-                            if (check_dist <= this_dist)
-                                continue;
+                                // Maybe a way to check if it's the same tree?
+                                if (check.getBlockData() instanceof Leaves) {
+                                    int check_dist = ((Leaves) check.getBlockData()).getDistance();
+                                    int this_dist = ((Leaves) block.getBlockData()).getDistance();
+                                    if (check_dist <= this_dist)
+                                        continue;
+                                }
 
-                            local_set.add(check);
-                            _top = check.getLocation();
-                            find(check);
+                                local_set.add(check);
+                                _top = check.getLocation();
+                                find(check);
+                            }
                         }
                     }
                 }
 
                 if (local_set.size() == 0)
                     break;
-
-                ++y;
             }
         }
     }

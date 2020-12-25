@@ -54,7 +54,10 @@ public class Chopper {
 
         // Get rid of the leaves
         for (Block leaf : tree.leaves) {
-            leaf.setType(Material.AIR);
+            if (Types.isNetherLeaf(leaf))
+                leaf.breakNaturally();
+            else
+                leaf.setType(Material.AIR);
         }
 
         // Only do tool damage for the number of logs we broke

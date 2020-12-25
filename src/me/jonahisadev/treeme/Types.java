@@ -8,12 +8,40 @@ public class Types {
 
     public static boolean isLog(Block b)
     {
-        return b.getBlockData().getMaterial().toString().contains("_LOG");
+        return (
+                b.getBlockData().getMaterial().toString().contains("_LOG") ||
+                isNetherLog(b)
+        );
+    }
+
+    public static boolean isNetherLog(Block b)
+    {
+        return (
+                b.getBlockData().getMaterial().toString().equals("CRIMSON_STEM") ||
+                b.getBlockData().getMaterial().toString().equals("WARPED_STEM")
+        );
     }
 
     public static boolean isLeaf(Block b)
     {
-        return (b.getBlockData() instanceof Leaves);
+        return (
+                (b.getBlockData() instanceof Leaves) ||
+                isNetherLeaf(b)
+        );
+    }
+
+    public static boolean isNetherLeaf(Block b)
+    {
+        return (
+                b.getBlockData().getMaterial().toString().equals("WARPED_WART_BLOCK") ||
+                b.getBlockData().getMaterial().toString().equals("NETHER_WART_BLOCK") ||
+                b.getBlockData().getMaterial().toString().equals("SHROOMLIGHT")
+        );
+    }
+
+    public static boolean isNetherBlock(Block b)
+    {
+        return isNetherLog(b) || isNetherLeaf(b);
     }
 
     public static Material sameSapling(Material logMat)
