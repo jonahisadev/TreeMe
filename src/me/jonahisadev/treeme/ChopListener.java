@@ -33,17 +33,26 @@ public class ChopListener implements Listener {
         if (!_plugin.playerStore.state(player.getUniqueId()))
             return;
 
+        // If the nether isn't allowed, don't chop in there
+        if (Types.isNetherLog(block) && !_plugin.config.getBoolean("allow_in_nether"))
+            return;
+
         // Constraints on when to run chopping algorithm
         if (Types.isLog(block) &&
-                tool.getType().toString().contains("AXE") &&
                 !player.isSneaking()) {
+
+            // Check that axe is required
+            if (_plugin.config.getBoolean("require_axe") && !tool.getType().toString().contains("AXE"))
+                return;
 
             // Find tree and chop it
             TreeModel tree = new TreeModel(_plugin, player.getWorld(), block);
             int damage = Chopper.go(_plugin, tree);
 
             // Set tool damage if not in creative
-            if (player.getGameMode() != GameMode.CREATIVE) {
+            if (player.getGameMode() != GameMode.CREATIVE &&
+                    (tool.getItemMeta() instanceof Damageable) &&
+                    _plugin.config.getBoolean("damage_tool")) {
                 ItemMeta meta = tool.getItemMeta();
                 ((Damageable) meta).setDamage(((Damageable) meta).getDamage() + damage);
                 tool.setItemMeta(meta);

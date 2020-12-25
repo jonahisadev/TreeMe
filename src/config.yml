@@ -1,0 +1,8 @@
+# Require an axe tool
+require_axe: true
+
+# Damage the tool
+damage_tool: true
+
+# Allow TreeMe in the nether
+allow_in_nether: true
