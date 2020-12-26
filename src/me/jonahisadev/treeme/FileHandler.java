@@ -11,8 +11,15 @@ public class FileHandler {
 
     public FileHandler(File file)
     {
+        // Setup
         _file = file;
         _config = new YamlConfiguration();
+
+        // Defaults
+        _config.addDefault("enabled", true);
+        _config.addDefault("replant", true);
+
+        // Load
         if (file.exists())
             load();
     }

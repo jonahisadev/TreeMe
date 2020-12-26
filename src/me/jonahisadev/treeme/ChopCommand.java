@@ -22,6 +22,7 @@ public class ChopCommand implements CommandExecutor {
     {
         player.sendMessage(ChatColor.GREEN + "TreeMe Commands:");
         player.sendMessage(ChatColor.GOLD + "  /treeme toggle: Toggle TreeMe features for yourself");
+        player.sendMessage(ChatColor.GOLD + "  /treeme replant: Toggle replanting features for yourself");
         player.sendMessage(ChatColor.GOLD + "  /treeme help: Show this message");
     }
 
@@ -33,10 +34,17 @@ public class ChopCommand implements CommandExecutor {
             // Commands
             switch (args[0]) {
                 case "toggle": {
-                    _plugin.playerStore.toggle(player.getUniqueId());
-                    boolean state = _plugin.playerStore.state(player.getUniqueId());
+                    _plugin.playerStore.toggle(player.getUniqueId(), "enabled");
+                    boolean state = _plugin.playerStore.state(player.getUniqueId()).enabled;
                     String msg = state ? (ChatColor.GREEN + "enabled") : (ChatColor.RED + "disabled");
                     player.sendMessage(ChatColor.GRAY + "TreeMe is now " + msg + ChatColor.GRAY + " for you");
+                    break;
+                }
+                case "replant": {
+                    _plugin.playerStore.toggle(player.getUniqueId(), "replant");
+                    boolean state = _plugin.playerStore.state(player.getUniqueId()).replant;
+                    String msg = state ? (ChatColor.GREEN + "enabled") : (ChatColor.RED + "disabled");
+                    player.sendMessage(ChatColor.GRAY + "TreeMe replant is now " + msg + ChatColor.GRAY + " for you");
                     break;
                 }
                 case "help": {

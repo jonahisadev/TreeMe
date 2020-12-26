@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +35,7 @@ public class ChopListener implements Listener {
             return;
 
         // Check player store
-        if (!_plugin.playerStore.state(player.getUniqueId()))
+        if (!_plugin.playerStore.state(player.getUniqueId()).enabled)
             return;
 
         // If the nether isn't allowed, don't chop in there
@@ -62,6 +63,13 @@ public class ChopListener implements Listener {
                 tool.setItemMeta(meta);
             }
         }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event)
+    {
+        Player player = event.getPlayer();
+        _plugin.playerStore.register(player.getUniqueId());
     }
 
 }

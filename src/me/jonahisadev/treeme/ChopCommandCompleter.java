@@ -17,6 +17,7 @@ public class ChopCommandCompleter implements TabCompleter {
 
             List<String> list = new ArrayList<>();
             list.add("toggle");
+            list.add("replant");
             list.add("help");
 
             // Extra commands for admin

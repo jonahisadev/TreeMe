@@ -61,7 +61,7 @@ public class Chopper {
         }
 
         // Replant if configured
-        if (plugin.config.getBoolean("replant")) {
+        if (plugin.config.getBoolean("replant") && plugin.playerStore.state(player.getUniqueId()).replant) {
             boolean found_sapling = false;
             if (plugin.config.getBoolean("replant_requires_sapling")
                     && player.getGameMode() != GameMode.CREATIVE) {
