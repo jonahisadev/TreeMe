@@ -1,19 +1,18 @@
 package me.jonahisadev.treeme;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Chopper {
 
-    public static int go(Main plugin, TreeModel tree)
+    public static int go(Main plugin, TreeModel tree, Player player)
     {
         // If there are no leaves, this is not actually a tree
         if (tree.leaves.size() == 0)
@@ -63,8 +62,25 @@ public class Chopper {
 
         // Replant if configured
         if (plugin.config.getBoolean("replant")) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin,
-                    () -> tree.getBaseBlock().getBlock().setType(sapling_type));
+            boolean found_sapling = false;
+            if (plugin.config.getBoolean("replant_requires_sapling")
+                    && player.getGameMode() != GameMode.CREATIVE) {
+
+                PlayerInventory inv = player.getInventory();
+                for (ItemStack item : inv) {
+                    if (item.getType() == sapling_type) {
+                        found_sapling = true;
+                        item.setAmount(item.getAmount() - 1);
+                        break;
+                    }
+                }
+            } else
+                found_sapling = true;
+
+            if (found_sapling) {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin,
+                        () -> tree.getBaseBlock().getBlock().setType(sapling_type));
+            }
         }
 
         // Only do tool damage for the number of logs we broke

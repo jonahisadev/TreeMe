@@ -51,7 +51,7 @@ public class ChopListener implements Listener {
 
             // Find tree and chop it
             TreeModel tree = new TreeModel(_plugin, player.getWorld(), block);
-            int damage = Chopper.go(_plugin, tree);
+            int damage = Chopper.go(_plugin, tree, player);
 
             // Set tool damage if not in creative
             if (player.getGameMode() != GameMode.CREATIVE &&
