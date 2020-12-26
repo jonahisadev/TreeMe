@@ -1,8 +1,15 @@
 # Require an axe tool
 require_axe: true
 
-# Damage the tool
+# Damage tool on chop
 damage_tool: true
 
 # Allow TreeMe in the nether
 allow_in_nether: true
+
+# Replant trees that get chopped
+replant: true
+
+# Replant feature requires a sapling be present
+# in player's inventory
+replant_requires_sapling: true

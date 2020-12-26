@@ -6,6 +6,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
+
 public class ChopCommand implements CommandExecutor {
 
     private Main _plugin;
@@ -17,11 +20,9 @@ public class ChopCommand implements CommandExecutor {
 
     private void sendHelp(Player player)
     {
-        player.sendMessage(
-            ChatColor.GOLD + "TreeMe Commands:\n" +
-            "  /tree toggle - Toggle TreeMe features for yourself\n" +
-            "  /tree help - Show this message"
-        );
+        player.sendMessage(ChatColor.GREEN + "TreeMe Commands:");
+        player.sendMessage(ChatColor.GOLD + "  /treeme toggle: Toggle TreeMe features for yourself");
+        player.sendMessage(ChatColor.GOLD + "  /treeme help: Show this message");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package me.jonahisadev.treeme;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Leaves;
@@ -16,6 +17,7 @@ public class TreeModel {
     private World _world;
     private Block _block;
     private Location _top;
+    private Location _base;
 
     public TreeModel(Main plugin, World world, Block block)
     {
@@ -27,6 +29,8 @@ public class TreeModel {
         leaves = new HashSet<>();
 
         find(block);
+        if (_plugin.config.getBoolean("replant"))
+            findBase(block);
     }
 
     private void find(Block block)
@@ -114,6 +118,24 @@ public class TreeModel {
         }
     }
 
+    public void findBase(Block block)
+    {
+        Location loc = block.getLocation();
+
+        while (true)
+        {
+            loc.subtract(0, 1, 0);
+            Block check = loc.getBlock();
+
+            if (!Types.isLog(check)) {
+                break;
+            }
+        }
+
+        loc.add(0, 1, 0);
+        _base = loc;
+    }
+
     public World getWorld()
     {
         return _world;
@@ -127,6 +149,11 @@ public class TreeModel {
     public Location getTopLocation()
     {
         return _top;
+    }
+
+    public Location getBaseBlock()
+    {
+        return _base;
     }
 
 }

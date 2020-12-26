@@ -5,9 +5,8 @@ for yourself on the [releases](https://github.com/jonahisadev/TreeMe/releases)
 page.
 
 **I built this for a friend, and do not intend to spend all of my free time
-maintaining it. I would like to continue improving it, specifically the
-configuration aspects, but I will not be making this a full time
-project.**
+maintaining it. I would like to continue improving it, but I will not be making 
+this a full time project.**
 
 ### Features
 

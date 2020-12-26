@@ -1,5 +1,6 @@
 package me.jonahisadev.treeme;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -58,6 +59,12 @@ public class Chopper {
                 leaf.breakNaturally();
             else
                 leaf.setType(Material.AIR);
+        }
+
+        // Replant if configured
+        if (plugin.config.getBoolean("replant")) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin,
+                    () -> tree.getBaseBlock().getBlock().setType(sapling_type));
         }
 
         // Only do tool damage for the number of logs we broke
