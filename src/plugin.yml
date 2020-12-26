@@ -1,15 +1,16 @@
 name: TreeMe
-version: 1.4.0
+version: 1.4.1-dev
 author: "Jonah Alligood"
 main: me.jonahisadev.treeme.Main
 api-version: 1.16
 website: "https://github.com/jonahisadev/TreeMe"
 description: A competent timber plugin for immediate tree removal
+softdepend: [WorldGuard]
 
 commands:
   treeme:
     description: Control personal usage of TreeMe
-    usage: "/treeme [toggle|help]"
+    usage: "/treeme [toggle|replant|help]"
 
 permissions:
   treeme.*:

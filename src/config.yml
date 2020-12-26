@@ -7,6 +7,11 @@ damage_tool: true
 # Allow TreeMe in the nether
 allow_in_nether: true
 
+# Break leaves
+break_leaves:
+  nether: false
+  overworld: true
+
 # Replant trees that get chopped
 replant: true
 

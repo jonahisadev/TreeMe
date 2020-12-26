@@ -6,9 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
-
 public class ChopCommand implements CommandExecutor {
 
     private Main _plugin;
@@ -22,7 +19,8 @@ public class ChopCommand implements CommandExecutor {
     {
         player.sendMessage(ChatColor.GREEN + "TreeMe Commands:");
         player.sendMessage(ChatColor.GOLD + "  /treeme toggle: Toggle TreeMe features for yourself");
-        player.sendMessage(ChatColor.GOLD + "  /treeme replant: Toggle replanting features for yourself");
+        if (_plugin.config.getBoolean("replant"))
+            player.sendMessage(ChatColor.GOLD + "  /treeme replant: Toggle replanting features for yourself");
         player.sendMessage(ChatColor.GOLD + "  /treeme help: Show this message");
     }
 
@@ -41,6 +39,9 @@ public class ChopCommand implements CommandExecutor {
                     break;
                 }
                 case "replant": {
+                    if (!_plugin.config.getBoolean("replant"))
+                        sendHelp(player);
+
                     _plugin.playerStore.toggle(player.getUniqueId(), "replant");
                     boolean state = _plugin.playerStore.state(player.getUniqueId()).replant;
                     String msg = state ? (ChatColor.GREEN + "enabled") : (ChatColor.RED + "disabled");
@@ -53,14 +54,14 @@ public class ChopCommand implements CommandExecutor {
                 }
                 default:
                     sendHelp(player);
-                    return false;
+                    break;
             }
 
             return true;
         }
 
         sender.sendMessage("This should only be run by players for now");
-        return false;
+        return true;
     }
 
 }

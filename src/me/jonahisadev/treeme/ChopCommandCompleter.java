@@ -10,6 +10,13 @@ import java.util.List;
 
 public class ChopCommandCompleter implements TabCompleter {
 
+    private Main _plugin;
+
+    public ChopCommandCompleter(Main plugin)
+    {
+        _plugin = plugin;
+    }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (sender instanceof Player) {
@@ -17,7 +24,8 @@ public class ChopCommandCompleter implements TabCompleter {
 
             List<String> list = new ArrayList<>();
             list.add("toggle");
-            list.add("replant");
+            if (_plugin.config.getBoolean("replant"))
+                list.add("replant");
             list.add("help");
 
             // Extra commands for admin

@@ -31,7 +31,7 @@ public class ChopListener implements Listener {
         ItemStack tool = player.getInventory().getItemInMainHand();
 
         // Verify player has correct permissions
-        if (!player.hasPermission("treeme.*"))
+        if (!player.hasPermission("treeme.use"))
             return;
 
         // Check player store
@@ -51,7 +51,14 @@ public class ChopListener implements Listener {
                 return;
 
             // Find tree and chop it
-            TreeModel tree = new TreeModel(_plugin, player.getWorld(), block);
+            TreeModel tree;
+            try {
+                tree = new TreeModel(_plugin, player, block);
+            } catch (TreeException e) {
+                _plugin.getLogger().warning(e.getMessage());
+                return;
+            }
+
             int damage = Chopper.go(_plugin, tree, player);
 
             // Set tool damage if not in creative

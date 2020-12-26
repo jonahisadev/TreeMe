@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Leaves;
+import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 
@@ -15,28 +16,36 @@ public class TreeModel {
 
     private Main _plugin;
     private World _world;
+    private Player _player;
     private Block _block;
     private Location _top;
     private Location _base;
 
-    public TreeModel(Main plugin, World world, Block block)
-    {
+    public TreeModel(Main plugin, Player player, Block block) throws TreeException {
         _plugin = plugin;
-        _world = world;
+        _player = player;
+        _world = player.getWorld();
         _block = block;
 
         logs = new HashSet<>();
         leaves = new HashSet<>();
 
-        find(block);
+        boolean can_remove = find(block);
+        if (!can_remove)
+            throw new TreeException("TreeMe blocked " + _player.getDisplayName() +
+                    " from breaking a protected tree");
+
         if (_plugin.config.getBoolean("replant"))
             findBase(block);
     }
 
-    private void find(Block block)
+    private boolean find(Block block)
     {
         // Algorithm for logs
         if (Types.isLog(block)) {
+            if (!safe(block))
+                return false;
+
             logs.add(block);
 
             // Check all surrounding blocks
@@ -48,8 +57,10 @@ public class TreeModel {
 
                         // Recursively find surrounding blocks
                         if ((Types.isLog(check) || Types.isLeaf(check)) &&
-                                !logs.contains(check) && !leaves.contains(check))
-                            find(check);
+                                !logs.contains(check) && !leaves.contains(check)) {
+                            if (!find(check))
+                                return false;
+                        }
                     }
                 }
             }
@@ -57,6 +68,9 @@ public class TreeModel {
 
         // Nether leaves are weird
         else if (Types.isNetherLeaf(block)) {
+            if (!safe(block))
+                return false;
+
             leaves.add(block);
 
             while (true) {
@@ -72,7 +86,8 @@ public class TreeModel {
 
                                 local_set.add(check);
                                 _top = check.getLocation();
-                                find(check);
+                                if (!find(check))
+                                    return false;
                             }
                         }
                     }
@@ -85,6 +100,9 @@ public class TreeModel {
 
         // Algorithm for leaves
         else if (Types.isLeaf(block)) {
+            if (!safe(block))
+                return false;
+
             leaves.add(block);
 
             int y = 0;
@@ -105,7 +123,8 @@ public class TreeModel {
 
                             local_set.add(check);
                             _top = check.getLocation();
-                            find(check);
+                            if (!find(check))
+                                return false;
                         }
                     }
                 }
@@ -116,6 +135,8 @@ public class TreeModel {
                 ++y;
             }
         }
+
+        return true;
     }
 
     public void findBase(Block block)
@@ -154,6 +175,13 @@ public class TreeModel {
     public Location getBaseBlock()
     {
         return _base;
+    }
+
+    private boolean safe(Block block)
+    {
+        if (_plugin.wg != null)
+            return true;
+        return _plugin.wg.createProtectionQuery().testBlockBreak(_player, block);
     }
 
 }
