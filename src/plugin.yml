@@ -4,9 +4,22 @@ author: "Jonah Alligood"
 main: me.jonahisadev.treeme.Main
 api-version: 1.16
 website: "https://github.com/jonahisadev/TreeMe"
+description: A competent timber plugin for immediate tree removal
 
 commands:
   treeme:
     description: Control personal usage of TreeMe
-    aliases: [tree]
-    usage: "/tree [toggle|help]"
+    usage: "/treeme [toggle|help]"
+
+permissions:
+  treeme.*:
+    description: Access to all TreeMe permissions
+    children:
+      treeme.admin: false
+      treeme.use: true
+  treeme.admin:
+    description: Full control of TreeMe and it's configuration
+    default: op
+  treeme.use:
+    description: Use TreeMe in the world
+    default: true

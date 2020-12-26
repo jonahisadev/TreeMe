@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChopCommandCompleter implements TabCompleter {
@@ -15,11 +15,16 @@ public class ChopCommandCompleter implements TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            String[] list = new String[]{
-                "toggle",
-                "help"
-            };
-            return Arrays.asList(list);
+            List<String> list = new ArrayList<>();
+            list.add("toggle");
+            list.add("help");
+
+            // Extra commands for admin
+            if (player.hasPermission("treeme.admin")) {
+                // TODO: extra admin commands
+            }
+
+            return list;
         }
 
         return null;

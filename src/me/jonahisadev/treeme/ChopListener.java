@@ -29,6 +29,10 @@ public class ChopListener implements Listener {
         Block block = event.getBlock();
         ItemStack tool = player.getInventory().getItemInMainHand();
 
+        // Verify player has correct permissions
+        if (!player.hasPermission("treeme.*"))
+            return;
+
         // Check player store
         if (!_plugin.playerStore.state(player.getUniqueId()))
             return;
