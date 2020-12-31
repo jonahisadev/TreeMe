@@ -62,12 +62,11 @@ public class ChopListener implements Listener {
             int damage = Chopper.go(_plugin, tree, player);
 
             // Set tool damage if not in creative
-            if (player.getGameMode() != GameMode.CREATIVE &&
-                    (tool.getItemMeta() instanceof Damageable) &&
-                    _plugin.config.getBoolean("damage_tool")) {
-                ItemMeta meta = tool.getItemMeta();
-                ((Damageable) meta).setDamage(((Damageable) meta).getDamage() + damage);
-                tool.setItemMeta(meta);
+            if (player.getGameMode() != GameMode.CREATIVE && (tool.getItemMeta() instanceof Damageable) && _plugin.config.getBoolean("damage_tool")) {
+                tool.setDurability((short) (tool.getDurability() + damage));
+                if(tool.getType().getMaxDurability() <= tool.getDurability()) {
+                    player.setItemInHand(null);
+                }
             }
         }
     }
