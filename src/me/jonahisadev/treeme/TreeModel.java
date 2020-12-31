@@ -179,7 +179,7 @@ public class TreeModel {
 
     private boolean safe(Block block)
     {
-        if (_plugin.wg != null)
+        if (_plugin.wg == null)
             return true;
         return _plugin.wg.createProtectionQuery().testBlockBreak(_player, block);
     }

@@ -65,7 +65,18 @@ public class ChopListener implements Listener {
             if (player.getGameMode() != GameMode.CREATIVE &&
                     (tool.getItemMeta() instanceof Damageable) &&
                     _plugin.config.getBoolean("damage_tool")) {
+                // Item Meta
                 ItemMeta meta = tool.getItemMeta();
+
+                // Check that tool should be deleted
+                int current_damage = ((Damageable)meta).getDamage();
+                _plugin.getLogger().info((current_damage + damage) + "/" + tool.getType().getMaxDurability());
+                if (current_damage + damage >= tool.getType().getMaxDurability()) {
+                    player.getInventory().setItemInMainHand(null);
+                    return;
+                }
+
+                // Set damage
                 ((Damageable) meta).setDamage(((Damageable) meta).getDamage() + damage);
                 tool.setItemMeta(meta);
             }
