@@ -70,7 +70,6 @@ public class ChopListener implements Listener {
 
                 // Check that tool should be deleted
                 int current_damage = ((Damageable)meta).getDamage();
-                _plugin.getLogger().info((current_damage + damage) + "/" + tool.getType().getMaxDurability());
                 if (current_damage + damage >= tool.getType().getMaxDurability()) {
                     player.getInventory().setItemInMainHand(null);
                     return;

@@ -27,6 +27,11 @@ public class TreeModel {
         _world = player.getWorld();
         _block = block;
 
+        // Setting base values in case something goes wrong with find(block), solved many NullPointerExceptions
+        // related to _top not being set properly on some trees.
+        _base = block.getLocation();
+        _top = block.getLocation();
+
         logs = new HashSet<>();
         leaves = new HashSet<>();
 
