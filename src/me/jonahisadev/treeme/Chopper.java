@@ -2,12 +2,12 @@ package me.jonahisadev.treeme;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Chopper {
@@ -68,6 +68,9 @@ public class Chopper {
 
                 PlayerInventory inv = player.getInventory();
                 for (ItemStack item : inv) {
+                    if (item == null) { // This shouldn't ever run, but it seems to
+                        continue;
+                    }
                     if (item.getType() == sapling_type) {
                         found_sapling = true;
                         item.setAmount(item.getAmount() - 1);
@@ -78,8 +81,15 @@ public class Chopper {
                 found_sapling = true;
 
             if (found_sapling) {
-                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin,
-                        () -> tree.getBaseBlock().getBlock().setType(sapling_type));
+                // Check block below base to see if valid for planting
+                switch (tree.getBaseBlock().getBlock().getRelative(BlockFace.DOWN).getType()) {
+                    case DIRT:
+                    case COARSE_DIRT:
+                    case GRASS_BLOCK:
+                    case PODZOL:
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin,
+                              () -> tree.getBaseBlock().getBlock().setType(sapling_type));
+                }
             }
         }
 
