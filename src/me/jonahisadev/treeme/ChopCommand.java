@@ -29,6 +29,12 @@ public class ChopCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
+            // Check for no arguments
+            if (args.length == 0) {
+                sendHelp(player);
+                return true;
+            }
+
             // Commands
             switch (args[0]) {
                 case "toggle": {
