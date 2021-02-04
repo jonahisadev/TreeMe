@@ -17,25 +17,30 @@ public class Types {
     public static boolean isNetherLog(Block b)
     {
         return (
-                b.getBlockData().getMaterial().toString().equals("CRIMSON_STEM") ||
-                b.getBlockData().getMaterial().toString().equals("WARPED_STEM")
+            b.getBlockData().getMaterial().toString().equals("CRIMSON_STEM") ||
+            b.getBlockData().getMaterial().toString().equals("WARPED_STEM")
         );
     }
 
     public static boolean isLeaf(Block b)
     {
         return (
-                (b.getBlockData() instanceof Leaves) ||
-                isNetherLeaf(b)
+            isOverworldLeaf(b) ||
+            isNetherLeaf(b)
         );
+    }
+
+    public static boolean isOverworldLeaf(Block b)
+    {
+        return (b.getBlockData() instanceof Leaves);
     }
 
     public static boolean isNetherLeaf(Block b)
     {
         return (
-                b.getBlockData().getMaterial().toString().equals("WARPED_WART_BLOCK") ||
-                b.getBlockData().getMaterial().toString().equals("NETHER_WART_BLOCK") ||
-                b.getBlockData().getMaterial().toString().equals("SHROOMLIGHT")
+            b.getBlockData().getMaterial().toString().equals("WARPED_WART_BLOCK") ||
+            b.getBlockData().getMaterial().toString().equals("NETHER_WART_BLOCK") ||
+            b.getBlockData().getMaterial().toString().equals("SHROOMLIGHT")
         );
     }
 

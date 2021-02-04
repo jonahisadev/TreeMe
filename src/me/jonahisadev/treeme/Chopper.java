@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Chopper {
@@ -53,7 +52,18 @@ public class Chopper {
         }
 
         // Get rid of the leaves
+        boolean cache = false;
         for (Block leaf : tree.leaves) {
+            if (!cache) {
+                if (((plugin.config.getConfigurationSection("break_leaves").getBoolean("nether")
+                    && Types.isNetherLeaf(leaf))
+                    || (plugin.config.getConfigurationSection("break_leaves").getBoolean("overworld")
+                    && Types.isOverworldLeaf(leaf)))) {
+                    cache = true;
+                } else
+                    break;
+            }
+
             if (Types.isNetherLeaf(leaf))
                 leaf.breakNaturally();
             else
