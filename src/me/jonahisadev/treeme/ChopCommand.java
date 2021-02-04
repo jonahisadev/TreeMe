@@ -29,8 +29,14 @@ public class ChopCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
+            // Added for the event of no args provided as using args[0] will give an ArrayIndexOutOfBoundsException
+            // when there are no passed args.
+            if (args.length == 0) {
+                sendHelp(player);
+                return true;
+            }
             // Commands
-            switch (args[0]) {
+            switch (args[0].toLowerCase()) {
                 case "toggle": {
                     _plugin.playerStore.toggle(player.getUniqueId(), "enabled");
                     boolean state = _plugin.playerStore.state(player.getUniqueId()).enabled;
