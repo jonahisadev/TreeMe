@@ -36,7 +36,7 @@ public class ChopCommand implements CommandExecutor {
             }
 
             // Commands
-            switch (args[0]) {
+            switch (args[0].toLowerCase()) {
                 case "toggle": {
                     _plugin.playerStore.toggle(player.getUniqueId(), "enabled");
                     boolean state = _plugin.playerStore.state(player.getUniqueId()).enabled;
