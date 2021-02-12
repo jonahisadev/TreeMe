@@ -62,6 +62,9 @@ public class Types {
             case ACACIA_LOG:
             case STRIPPED_ACACIA_LOG:
                 return Material.ACACIA_SAPLING;
+            case JUNGLE_LOG:
+            case STRIPPED_JUNGLE_LOG:
+                return Material.JUNGLE_SAPLING;
             default:
                 return Material.AIR;
         }
